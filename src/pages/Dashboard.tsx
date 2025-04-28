@@ -1,13 +1,18 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import MetricCard from '@/components/dashboard/MetricCard';
 import ChurnRiskChart from '@/components/dashboard/ChurnRiskChart';
 import ChurnTrendChart from '@/components/dashboard/ChurnTrendChart';
 import RiskFactorsChart from '@/components/dashboard/RiskFactorsChart';
 import CustomerTable from '@/components/customers/CustomerTable';
-import { Users, AlertCircle, TrendingDown } from 'lucide-react';
+import { Users, AlertCircle, TrendingDown, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { toast } from '@/hooks/use-toast';
 
 const Dashboard = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   // Sample data
   const churnRiskData = [
     { name: 'High Risk', value: 120, color: '#FF5252' },
@@ -81,12 +86,53 @@ const Dashboard = () => {
     },
   ];
   
+  // Simulate prediction loading
+  const handlePredictionRefresh = () => {
+    setIsLoading(true);
+    
+    toast({
+      title: "Updating predictions",
+      description: "Analyzing customer data and updating risk assessments..."
+    });
+    
+    // Simulate API call delay
+    setTimeout(() => {
+      setIsLoading(false);
+      toast({
+        title: "Predictions updated",
+        description: "Customer risk assessments have been refreshed",
+      });
+    }, 2500);
+  };
+  
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold mb-2">Customer Churn Dashboard</h1>
-        <p className="text-muted-foreground">Monitor and analyze customer churn metrics and risks.</p>
-      </div>
+      {/* Hero Section */}
+      <Card className="bg-gradient-to-r from-banking-blue to-banking-teal p-8 text-white mb-6">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold mb-3">Predict Customer Churn. Retain More Clients.</h1>
+          <p className="text-xl mb-6 opacity-90">
+            Use AI-powered insights to identify at-risk customers and implement targeted retention strategies.
+          </p>
+          <Button 
+            onClick={handlePredictionRefresh}
+            disabled={isLoading}
+            className="bg-white text-banking-blue hover:bg-gray-100 font-medium"
+          >
+            {isLoading ? (
+              <>
+                <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-banking-blue border-t-transparent"></span>
+                Processing...
+              </>
+            ) : (
+              <>
+                Refresh Predictions 
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </>
+            )}
+          </Button>
+        </div>
+      </Card>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         <MetricCard 
@@ -95,6 +141,7 @@ const Dashboard = () => {
           change={2.5} 
           trend="up"
           icon={<Users className="h-5 w-5 text-primary" />}
+          isLoading={isLoading}
         />
         <MetricCard 
           title="Churn Rate" 
@@ -102,6 +149,7 @@ const Dashboard = () => {
           change={0.3} 
           trend="up"
           icon={<TrendingDown className="h-5 w-5 text-primary" />}
+          isLoading={isLoading}
         />
         <MetricCard 
           title="At Risk Customers" 
@@ -109,28 +157,30 @@ const Dashboard = () => {
           change={12} 
           trend="up"
           icon={<AlertCircle className="h-5 w-5 text-primary" />}
+          isLoading={isLoading}
         />
         <MetricCard 
           title="Retention Rate" 
           value="95.5%" 
           change={-0.3} 
           trend="down"
+          isLoading={isLoading}
         />
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <ChurnTrendChart data={churnTrendData} />
-        <ChurnRiskChart data={churnRiskData} />
+        <ChurnTrendChart data={churnTrendData} isLoading={isLoading} />
+        <ChurnRiskChart data={churnRiskData} isLoading={isLoading} />
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <h2 className="text-xl font-semibold mb-4">High-Risk Customers</h2>
-          <CustomerTable customers={topRiskCustomers} />
+          <CustomerTable customers={topRiskCustomers} isLoading={isLoading} />
         </div>
         <div>
           <h2 className="text-xl font-semibold mb-4">Top Risk Factors</h2>
-          <RiskFactorsChart data={riskFactorsData} />
+          <RiskFactorsChart data={riskFactorsData} isLoading={isLoading} />
         </div>
       </div>
     </div>

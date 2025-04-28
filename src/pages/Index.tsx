@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 // Redirect users from / to our main dashboard
 const Index = () => {
-  return <Navigate to="/" replace />;
+  return <Navigate to="/dashboard" replace />;
 };
 
 export default Index;
