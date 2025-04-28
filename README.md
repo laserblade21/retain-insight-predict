@@ -1,7 +1,6 @@
 
 # RetainInsight - AI-Powered Customer Churn Prediction Platform
 
-![RetainInsight Dashboard](https://lovable.dev/opengraph-image-p98pqg.png)
 
 ## Overview
 
@@ -128,12 +127,8 @@ To connect your RetainInsight application to a custom domain:
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
 
-- Built with [Lovable](https://lovable.dev)
-- UI components from [shadcn/ui](https://ui.shadcn.com)
-- Charts powered by [Recharts](https://recharts.org)
 
 ## Support
 
-For questions or support, please contact [your-email@example.com](mailto:your-email@example.com)
+For questions or support, please contact me.
