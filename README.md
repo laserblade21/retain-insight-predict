@@ -1,73 +1,139 @@
-# Welcome to your Lovable project
 
-## Project info
+# RetainInsight - AI-Powered Customer Churn Prediction Platform
 
-**URL**: https://lovable.dev/projects/3d1aa086-0dbc-4d3f-ab96-64a85aa4d367
+![RetainInsight Dashboard](https://lovable.dev/opengraph-image-p98pqg.png)
 
-## How can I edit this code?
+## Overview
 
-There are several ways of editing your application.
+RetainInsight is an AI-powered platform designed to help financial institutions identify at-risk customers and implement targeted retention strategies. By leveraging advanced analytics and machine learning, the platform predicts customer churn before it happens, allowing banks to take proactive measures to improve customer satisfaction and retention.
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3d1aa086-0dbc-4d3f-ab96-64a85aa4d367) and start prompting.
+### 📊 Comprehensive Dashboard
+- Real-time overview of key customer metrics
+- Visual representation of churn risk distribution
+- Historical churn rate trends
+- Top contributors to customer churn
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🔍 Customer Risk Analysis
+- Individual customer risk scoring
+- Detailed customer profiles with historical activity
+- Risk factor identification per customer
+- Behavioral pattern recognition
 
-**Use your preferred IDE**
+### 📈 Analytics & Reporting
+- Detailed churn analytics
+- Segmentation by customer demographics
+- Performance tracking of retention initiatives
+- Customizable reports and exports
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 🎯 Retention Strategy Tools
+- Recommended intervention actions
+- Automated customer outreach workflows
+- A/B testing for retention strategies
+- ROI calculation for retention campaigns
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Technology Stack
 
-Follow these steps:
+- **Frontend**: React, TypeScript, Tailwind CSS, shadcn/ui
+- **Data Visualization**: Recharts
+- **State Management**: React Context API
+- **Responsive Design**: Mobile and desktop optimized interface
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Getting Started
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Prerequisites
 
-# Step 3: Install the necessary dependencies.
-npm i
+- Node.js (v16 or higher)
+- npm or yarn
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### Installation
+
+1. Clone the repository
+   ```sh
+   git clone <YOUR_GIT_URL>
+   cd <YOUR_PROJECT_NAME>
+   ```
+
+2. Install dependencies
+   ```sh
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Start the development server
+   ```sh
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. Open [http://localhost:5173](http://localhost:5173) to view the application in your browser
+
+## Project Structure
+
+```
+src/
+├── components/         # UI components
+│   ├── customers/      # Customer-related components
+│   ├── dashboard/      # Dashboard widgets and charts
+│   ├── layout/         # Layout components (header, sidebar, etc.)
+│   └── ui/             # Reusable UI components
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions and helpers
+├── pages/              # Page components
+└── main.tsx            # Application entry point
 ```
 
-**Edit a file directly in GitHub**
+## Dashboard Metrics Explained
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Churn Rate
+The percentage of customers who have discontinued their relationship with the bank over a specific period. Lower is better.
 
-**Use GitHub Codespaces**
+### At Risk Customers
+Customers identified by the AI model as having a high probability of churning in the near future. These are your priority retention targets.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Retention Rate
+The percentage of customers who maintain their relationship with the bank over a specific period. Higher is better.
 
-## What technologies are used for this project?
+### Risk Factors
+Key indicators that contribute to a customer's likelihood to churn, such as decreasing transaction volume, service issues, or account dormancy.
 
-This project is built with:
+## Deploying to Production
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+The project can be deployed through Lovable's built-in deployment feature:
 
-## How can I deploy this project?
+1. Navigate to your project in Lovable
+2. Click on the "Share" button in the top-right corner
+3. Select "Publish" to deploy your application
 
-Simply open [Lovable](https://lovable.dev/projects/3d1aa086-0dbc-4d3f-ab96-64a85aa4d367) and click on Share -> Publish.
+## Custom Domain Setup
 
-## Can I connect a custom domain to my Lovable project?
+To connect your RetainInsight application to a custom domain:
 
-Yes, you can!
+1. Navigate to Project > Settings > Domains in Lovable
+2. Click "Connect Domain" and follow the instructions
+3. Update your DNS settings as specified
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Future Roadmap
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Integration with CRM systems
+- Advanced predictive models using additional data sources
+- Customer journey mapping
+- Mobile app for on-the-go monitoring
+- API integration with third-party retention tools
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Built with [Lovable](https://lovable.dev)
+- UI components from [shadcn/ui](https://ui.shadcn.com)
+- Charts powered by [Recharts](https://recharts.org)
+
+## Support
+
+For questions or support, please contact [your-email@example.com](mailto:your-email@example.com)
