@@ -1,17 +1,32 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MetricCard from '@/components/dashboard/MetricCard';
 import ChurnRiskChart from '@/components/dashboard/ChurnRiskChart';
 import ChurnTrendChart from '@/components/dashboard/ChurnTrendChart';
 import RiskFactorsChart from '@/components/dashboard/RiskFactorsChart';
 import CustomerTable from '@/components/customers/CustomerTable';
-import { Users, AlertCircle, TrendingDown, ArrowRight } from 'lucide-react';
+import { Users, AlertCircle, TrendingDown, ArrowRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
+
+  // Check if welcome message should be shown
+  useEffect(() => {
+    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
+    if (hasSeenWelcome) {
+      setShowWelcome(false);
+    }
+  }, []);
+
+  // Function to dismiss welcome message
+  const dismissWelcome = () => {
+    setShowWelcome(false);
+    localStorage.setItem('hasSeenWelcome', 'true');
+  };
 
   // Sample data
   const churnRiskData = [
@@ -107,6 +122,29 @@ const Dashboard = () => {
   
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Welcome Message */}
+      {showWelcome && (
+        <Card className="bg-white border border-banking-teal/30 mb-4 overflow-hidden">
+          <div className="flex justify-between items-start p-5">
+            <div>
+              <h2 className="text-xl font-semibold text-banking-teal mb-2">Welcome to RetainInsight</h2>
+              <p className="text-gray-600">
+                Your AI-powered platform for predicting and reducing customer churn. 
+                Start by analyzing your dashboard metrics and identifying at-risk customers.
+              </p>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={dismissWelcome}
+              className="h-8 w-8"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        </Card>
+      )}
+
       {/* Hero Section */}
       <Card className="bg-gradient-to-r from-banking-blue to-banking-teal p-8 text-white mb-6">
         <div className="max-w-4xl mx-auto">
