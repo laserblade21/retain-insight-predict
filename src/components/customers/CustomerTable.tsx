@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Table,
@@ -10,6 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import CustomerDrawer from './CustomerDrawer';
 
 interface Customer {
   id: number;
@@ -27,10 +28,18 @@ interface CustomerTableProps {
 }
 
 const CustomerTable = ({ customers, isLoading = false }: CustomerTableProps) => {
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   const getRiskLevel = (score: number) => {
     if (score >= 70) return { level: 'high', color: 'bg-banking-danger' };
     if (score >= 40) return { level: 'medium', color: 'bg-banking-warning' };
     return { level: 'low', color: 'bg-banking-success' };
+  };
+
+  const handleRowClick = (customer: Customer) => {
+    setSelectedCustomer(customer);
+    setDrawerOpen(true);
   };
 
   return (
@@ -77,7 +86,11 @@ const CustomerTable = ({ customers, isLoading = false }: CustomerTableProps) => 
             customers.map((customer) => {
               const risk = getRiskLevel(customer.riskScore);
               return (
-                <TableRow key={customer.id}>
+                <TableRow 
+                  key={customer.id} 
+                  className="cursor-pointer" 
+                  onClick={() => handleRowClick(customer)}
+                >
                   <TableCell>
                     <div>
                       <p className="font-medium">{customer.name}</p>
@@ -97,7 +110,7 @@ const CustomerTable = ({ customers, isLoading = false }: CustomerTableProps) => 
                       {customer.status}
                     </Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell onClick={(e) => e.stopPropagation()}>
                     <Link 
                       to={`/customers/${customer.id}`}
                       className="text-sm font-medium text-primary hover:underline"
@@ -111,6 +124,12 @@ const CustomerTable = ({ customers, isLoading = false }: CustomerTableProps) => 
           )}
         </TableBody>
       </Table>
+
+      <CustomerDrawer 
+        customer={selectedCustomer}
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+      />
     </div>
   );
 };
