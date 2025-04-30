@@ -3,33 +3,19 @@ import React from 'react';
 import { 
   Drawer, 
   DrawerContent, 
-  DrawerHeader, 
-  DrawerTitle,
-  DrawerDescription,
   DrawerFooter,
   DrawerClose
 } from '@/components/ui/drawer';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import { 
-  LineChart, 
-  Line, 
-  BarChart,
-  Bar,
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer 
-} from 'recharts';
-import { User, Phone, Mail, Calendar, MessageSquare, AlertCircle, TrendingUp } from 'lucide-react';
+
+// Import refactored components
+import CustomerDrawerHeader from './drawer/CustomerDrawerHeader';
+import CustomerOverview from './drawer/CustomerOverview';
+import RiskFactorsTab from './drawer/RiskFactorsTab';
+import InteractionsTab from './drawer/InteractionsTab';
+import UsageTrendsTab from './drawer/UsageTrendsTab';
+import RetentionActionsTab from './drawer/RetentionActionsTab';
 
 interface Customer {
   id: number;
@@ -82,95 +68,14 @@ const CustomerDrawer = ({ customer, open, onOpenChange }: CustomerDrawerProps) =
     ]
   };
 
-  const getRiskLevel = (score: number) => {
-    if (score >= 70) return { level: 'High Risk', color: 'bg-red-500' };
-    if (score >= 40) return { level: 'Medium Risk', color: 'bg-amber-500' };
-    return { level: 'Low Risk', color: 'bg-green-500' };
-  };
-  
-  const risk = getRiskLevel(customer.riskScore);
-
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="max-h-[90vh] overflow-y-auto">
-        <DrawerHeader className="border-b pb-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <DrawerTitle className="text-xl">{customer.name}</DrawerTitle>
-              <DrawerDescription>Customer ID: {customer.id}</DrawerDescription>
-            </div>
-            <Badge className={risk.color}>{risk.level}</Badge>
-          </div>
-        </DrawerHeader>
+        <CustomerDrawerHeader customer={customer} />
         
         <div className="px-4 py-6">
-          {/* Customer Overview Section */}
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle className="text-lg">Customer Overview</CardTitle>
-            </CardHeader>
-            <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 p-2 rounded-full">
-                  <Mail className="h-5 w-5 text-banking-teal" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium">{customer.email}</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 p-2 rounded-full">
-                  <Phone className="h-5 w-5 text-banking-teal" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Phone</p>
-                  <p className="font-medium">{customerDetails.phoneNumber}</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 p-2 rounded-full">
-                  <User className="h-5 w-5 text-banking-teal" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Account Type</p>
-                  <p className="font-medium">{customer.accountType}</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 p-2 rounded-full">
-                  <Calendar className="h-5 w-5 text-banking-teal" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Customer Since</p>
-                  <p className="font-medium">{customerDetails.joinDate}</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 p-2 rounded-full">
-                  <AlertCircle className="h-5 w-5 text-banking-teal" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Risk Score</p>
-                  <p className="font-medium">{customer.riskScore}%</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 p-2 rounded-full">
-                  <TrendingUp className="h-5 w-5 text-banking-teal" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Last Activity</p>
-                  <p className="font-medium">{customer.lastActivity}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          {/* Customer Overview Component */}
+          <CustomerOverview customer={customer} customerDetails={customerDetails} />
           
           <Tabs defaultValue="risk-factors">
             <TabsList className="w-full mb-4">
@@ -180,103 +85,21 @@ const CustomerDrawer = ({ customer, open, onOpenChange }: CustomerDrawerProps) =
               <TabsTrigger value="retention-actions" className="flex-1">Retention Actions</TabsTrigger>
             </TabsList>
             
+            {/* Tab content components */}
             <TabsContent value="risk-factors">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Risk Factor Breakdown</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-[250px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        layout="vertical"
-                        data={customerDetails.riskFactors}
-                        margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" horizontal={false} opacity={0.2} />
-                        <XAxis type="number" domain={[0, 100]} tickFormatter={(tick) => `${tick}%`} />
-                        <YAxis type="category" dataKey="factor" />
-                        <Tooltip formatter={(value) => [`${value}%`, 'Impact']} />
-                        <Bar dataKey="score" fill="#0A2647" barSize={20} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
+              <RiskFactorsTab riskFactors={customerDetails.riskFactors} />
             </TabsContent>
             
             <TabsContent value="interactions">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Recent Interactions</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {customerDetails.interactions.map((interaction, index) => (
-                      <div key={index} className="flex border-b pb-3 last:border-0 last:pb-0">
-                        <div className="mr-3 bg-gray-100 p-2 rounded-full h-fit">
-                          <MessageSquare className="h-5 w-5 text-banking-teal" />
-                        </div>
-                        <div>
-                          <div className="flex justify-between items-start">
-                            <p className="font-medium">{interaction.type}</p>
-                            <p className="text-sm text-muted-foreground">{interaction.date}</p>
-                          </div>
-                          <p className="text-sm text-muted-foreground">{interaction.details}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              <InteractionsTab interactions={customerDetails.interactions} />
             </TabsContent>
             
             <TabsContent value="usage-trends">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Product Usage Trends</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-[250px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
-                        data={customerDetails.productUsage}
-                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                        <XAxis dataKey="month" />
-                        <YAxis domain={[0, 100]} tickFormatter={(tick) => `${tick}%`} />
-                        <Tooltip formatter={(value) => [`${value}%`, 'Usage']} />
-                        <Line 
-                          type="monotone" 
-                          dataKey="usage" 
-                          stroke="#2C74B3" 
-                          strokeWidth={2}
-                          activeDot={{ r: 8 }} 
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
+              <UsageTrendsTab productUsage={customerDetails.productUsage} />
             </TabsContent>
             
             <TabsContent value="retention-actions">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Recommended Retention Actions</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {customerDetails.recommendedActions.map((action, index) => (
-                      <div key={index} className="bg-muted/50 p-4 rounded-md">
-                        <h4 className="font-medium mb-1">{action.title}</h4>
-                        <p className="text-sm text-muted-foreground">{action.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              <RetentionActionsTab recommendedActions={customerDetails.recommendedActions} />
             </TabsContent>
           </Tabs>
         </div>
