@@ -15,7 +15,8 @@ const Header = () => {
 
   return (
     <header className="bg-white border-b border-gray-200 h-16 flex items-center px-6">
-      <div className="flex-1">
+      <div className="flex-1 flex items-center">
+        <h1 className="text-xl font-bold text-banking-teal mr-6">Churn-Sight</h1>
         <div className="relative w-64">
           <input
             type="text"
