@@ -25,13 +25,13 @@ import {
 } from "@/components/ui/form";
 import { toast } from "@/hooks/use-toast";
 
-// Simplified schema to be less restrictive for email
+// Make email validation less restrictive
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-// Simplified schema to be less restrictive for email
+// Make email validation less restrictive
 const signupSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
   email: z.string().min(1, "Email is required"),
@@ -52,7 +52,7 @@ const Auth = () => {
       email: "",
       password: "",
     },
-    mode: "onSubmit", // Change validation mode to only validate on submit
+    mode: "onSubmit", // Only validate on submit
   });
 
   const signupForm = useForm<z.infer<typeof signupSchema>>({
@@ -63,10 +63,20 @@ const Auth = () => {
       confirmPassword: "",
       fullName: "",
     },
-    mode: "onSubmit", // Change validation mode to only validate on submit
+    mode: "onSubmit", // Only validate on submit
   });
 
   const handleLogin = async (values: z.infer<typeof loginSchema>) => {
+    // Basic email format validation before submission
+    if (!isValidEmail(values.email)) {
+      toast({
+        variant: "destructive",
+        title: "Invalid email",
+        description: "Please enter a valid email address",
+      });
+      return;
+    }
+
     const { error } = await signIn(values.email, values.password);
     
     if (error) {
@@ -79,7 +89,7 @@ const Auth = () => {
   };
 
   const handleSignup = async (values: z.infer<typeof signupSchema>) => {
-    // Validate email format before submission
+    // Basic email format validation before submission
     if (!isValidEmail(values.email)) {
       toast({
         variant: "destructive",
@@ -141,10 +151,11 @@ const Auth = () => {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input 
-                            type="text"
+                            type="text" 
                             placeholder="email@example.com" 
                             {...field} 
                             autoComplete="email"
+                            autoCapitalize="none"
                           />
                         </FormControl>
                         <FormMessage />
@@ -218,10 +229,11 @@ const Auth = () => {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input 
-                            type="text"
+                            type="text" 
                             placeholder="email@example.com" 
                             {...field}
-                            autoComplete="email" 
+                            autoComplete="email"
+                            autoCapitalize="none"
                           />
                         </FormControl>
                         <FormMessage />
