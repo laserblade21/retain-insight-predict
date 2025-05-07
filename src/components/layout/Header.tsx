@@ -14,6 +14,12 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import ExportOptionsButton from "@/components/common/ExportOptionsButton";
 
+// Sample data for export functionality
+const sampleExportData = [
+  { id: 1, name: "Sample Data 1", value: 100 },
+  { id: 2, name: "Sample Data 2", value: 200 },
+];
+
 const Header = () => {
   const { user, signOut } = useAuth();
   
@@ -40,7 +46,10 @@ const Header = () => {
     <header className="flex h-16 items-center justify-between border-b px-6">
       <div className="font-semibold">ChurnSight</div>
       <div className="flex items-center gap-4">
-        <ExportOptionsButton />
+        <ExportOptionsButton 
+          data={sampleExportData} 
+          filename="export-data" 
+        />
         <Button variant="outline" size="icon">
           <Bell className="h-4 w-4" />
         </Button>
