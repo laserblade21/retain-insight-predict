@@ -64,6 +64,32 @@ const LoginForm = ({ onSuccess, onSwitchToSignup }: LoginFormProps) => {
     }
   };
 
+  const handleDemoLogin = async () => {
+    const demoEmail = "demo@example.com";
+    const demoPassword = "demopassword";
+    
+    // Set form values to demo credentials
+    form.setValue("email", demoEmail);
+    form.setValue("password", demoPassword);
+    
+    // Show toast to inform user
+    toast({
+      title: "Demo mode",
+      description: "Logging in with demo account...",
+    });
+    
+    // Sign in with demo credentials
+    const { error } = await signIn(demoEmail, demoPassword);
+    
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Demo login failed",
+        description: "The demo account may not exist yet. Please sign up first.",
+      });
+    }
+  };
+
   return (
     <>
       <Form {...form}>
@@ -107,6 +133,25 @@ const LoginForm = ({ onSuccess, onSwitchToSignup }: LoginFormProps) => {
           />
           <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting ? "Signing In..." : "Sign In"}
+          </Button>
+          
+          {/* Demo Account Button */}
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">Or</span>
+            </div>
+          </div>
+          
+          <Button 
+            type="button" 
+            className="w-full" 
+            variant="outline" 
+            onClick={handleDemoLogin}
+          >
+            Try Demo Account
           </Button>
         </form>
       </Form>
