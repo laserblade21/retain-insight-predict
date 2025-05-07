@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { z } from "zod";
@@ -31,9 +30,9 @@ const loginSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-// Make email validation less restrictive
+// Make email validation less restrictive and rename fullName to name
 const signupSchema = z.object({
-  fullName: z.string().min(2, "Full name must be at least 2 characters"),
+  name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().min(1, "Email is required"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   confirmPassword: z.string(),
@@ -61,7 +60,7 @@ const Auth = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      fullName: "",
+      name: "",
     },
     mode: "onSubmit", // Only validate on submit
   });
@@ -99,7 +98,7 @@ const Auth = () => {
       return;
     }
     
-    const { error } = await signUp(values.email, values.password, values.fullName);
+    const { error } = await signUp(values.email, values.password, values.name);
     
     if (error) {
       toast({
@@ -205,10 +204,10 @@ const Auth = () => {
                 <form onSubmit={signupForm.handleSubmit(handleSignup)} className="space-y-4">
                   <FormField
                     control={signupForm.control}
-                    name="fullName"
+                    name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Full Name</FormLabel>
+                        <FormLabel>Name</FormLabel>
                         <FormControl>
                           <Input 
                             type="text"
