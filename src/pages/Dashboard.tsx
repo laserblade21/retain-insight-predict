@@ -127,7 +127,7 @@ const Dashboard = () => {
         <Card className="bg-white border border-banking-teal/30 mb-4 overflow-hidden">
           <div className="flex justify-between items-start p-5">
             <div>
-              <h2 className="text-xl font-semibold text-banking-teal mb-2">Welcome to RetainInsight</h2>
+              <h2 className="text-xl font-semibold text-banking-teal mb-2">Welcome to ChurnSight</h2>
               <p className="text-gray-600">
                 Your AI-powered platform for predicting and reducing customer churn. 
                 Start by analyzing your dashboard metrics and identifying at-risk customers.
