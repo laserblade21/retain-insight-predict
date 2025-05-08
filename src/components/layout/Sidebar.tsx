@@ -37,7 +37,7 @@ const Sidebar = () => {
   const path = location.pathname;
   
   const navItems = [
-    { to: '/', icon: LayoutDashboard, title: 'Dashboard' },
+    { to: '/dashboard', icon: LayoutDashboard, title: 'Dashboard' },
     { to: '/customers', icon: Users, title: 'Customers' },
     { to: '/analytics', icon: BarChart2, title: 'Analytics' },
     { to: '/retention', icon: Heart, title: 'Retention' },
@@ -49,7 +49,7 @@ const Sidebar = () => {
       <div className="px-6 mb-8">
         <h1 className="text-xl font-bold flex items-center">
           <span className="text-sidebar-primary">Churn</span>
-          <span>Guard</span>
+          <span>Sight</span>
         </h1>
       </div>
       
@@ -61,8 +61,8 @@ const Sidebar = () => {
             icon={item.icon}
             title={item.title}
             active={
-              item.to === '/' 
-                ? path === '/' 
+              item.to === '/dashboard' 
+                ? path === '/dashboard' 
                 : path.startsWith(item.to)
             }
           />
@@ -71,7 +71,7 @@ const Sidebar = () => {
       
       <div className="px-6 mt-auto">
         <div className="py-3 px-3 rounded-md bg-sidebar-accent/30 text-sm">
-          <p className="font-medium">ChurnGuard Pro</p>
+          <p className="font-medium">ChurnSight Pro</p>
           <p className="text-sidebar-foreground/70 text-xs mt-1">
             Your trial ends in 13 days
           </p>
