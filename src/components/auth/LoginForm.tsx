@@ -65,7 +65,7 @@ const LoginForm = ({ onSuccess, onSwitchToSignup }: LoginFormProps) => {
   };
 
   const handleDemoLogin = async () => {
-    const demoEmail = "eyobbekele112@gmail.com";
+    const demoEmail = "demouser3443@gmail.com";
     const demoPassword = "demopassword";
     
     // Set form values to demo credentials
